@@ -26,4 +26,3 @@ Siga estos pasos para configurar el proyecto localmente:
 
    ```bash
    git clone https://github.com/tu-usuario/tu-repo.git
-   cd tu-repo
