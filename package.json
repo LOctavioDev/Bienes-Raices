@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Este proyecto sera desarrollado con Node, Express, Sequelize, PUG, Tailwind, Leaflet, consistira en realizar un sistema web que permite la publicacion de propiedades para su compra venta.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "start-permanente": "nodemon src/index.js"
+    "start-permanente": "nodemon src/index.js",
+    "server": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
