@@ -30,5 +30,4 @@ app.get('/misDatos', (req,res) => {
         "matricula": "220096",
 
     })
-
 });

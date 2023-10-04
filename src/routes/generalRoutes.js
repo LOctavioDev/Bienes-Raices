@@ -1,7 +1,8 @@
-import express from "express";
+import express, { request } from "express";
 
 const router = express.Router();
 
+// RUTAS GET
 router.get('/', (request, response) => {
     response.send("Hola Web");
 });
@@ -21,5 +22,34 @@ router.get('/misDatos', (request, response) => {
         "matricula": "220096",
     });
 });
+router.get('/get/', (request, response) => {
+    response.send("Hola desde GET");
+});
+
+
+//PRACTICA 22 "PETICION ATRAVEZ DE LOS VERBOS HTTP"
+//RUTAS DE POST
+router.post('/', (request, response) => response.send("Hi web from POST verb"))
+
+
+//RUTAS DE PUT
+router.put('/', (request, response) => response.send("You are trying to update some properties of data using PUT"))
+
+
+//RUTAS DE PATCH
+router.patch('/', (request, response) => response.send("Hi, you are tryning to update all data object throught PACTH"))
+
+
+//RUTAS DE PELETE
+router.delete('/', (request, response) => response.send("Are you sure that you want to DELETE data?"))
+
+
+
+
+
+
+
+
+
 
 export default router;
