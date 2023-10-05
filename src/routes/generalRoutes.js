@@ -7,7 +7,8 @@ const router = express.Router();
 //     response.send("Hola Web");
 // })
 
-router.get('/', (request, response) => response.render('login.pug'))
+router.get('/', (request, response) => response.render('layout/index.pug'))
+
 
 router.get('/quienEres', (request, response) => {
     response.send("Soy tu primera app web en arquitectura de SOA");

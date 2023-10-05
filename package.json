@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/index.js",
     "start-permanente": "nodemon src/index.js",
-    "server": "nodemon src/server.js"
+    "server": "nodemon src/server.js",
+    "css-compiler": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
   },
   "repository": {
     "type": "git",
@@ -30,9 +31,10 @@
   "homepage": "https://github.com/LOctavioDev/Bienes-Raices#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "pug": "^3.0.2",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
+    "tailwindcss": "^3.3.3"
   }
 }
