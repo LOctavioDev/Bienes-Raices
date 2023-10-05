@@ -1,11 +1,13 @@
-import express, { request } from "express";
+import express, { request, response } from "express";
 
 const router = express.Router();
 
 // RUTAS GET
-router.get('/', (request, response) => {
-    response.send("Hola Web");
-});
+// router.get('/', (request, response) => {
+//     response.send("Hola Web");
+// })
+
+router.get('/', (request, response) => response.render('login.pug'))
 
 router.get('/quienEres', (request, response) => {
     response.send("Soy tu primera app web en arquitectura de SOA");

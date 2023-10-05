@@ -9,3 +9,9 @@ app.use('/', generalRoutes);
 app.listen(port, () => {
     console.log(`El servicio HTTP ha sido iniciado\nEl servicio está escuchando en el puerto ${port}`);
 });
+
+
+//AGREGAR Y CONFIGURAR EL TEMPLATE_ENGINE
+
+app.set('view engie', 'pug')
+app.set('views', './src/views')
