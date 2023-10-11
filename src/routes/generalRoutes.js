@@ -11,6 +11,8 @@ const router = express.Router();
 router.get('/', (request, response) => response.render("layout/index.pug", {page: "Home"}));
 
 
+
+
 router.get('/quienEres', (request, response) => {
     response.send("Soy tu primera app web en arquitectura de SOA");
 });

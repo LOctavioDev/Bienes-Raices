@@ -1,15 +1,26 @@
 // import { response } from "express"
 
+import { request, response } from "express"
+
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
-        isLogged: false
+        isLogged: false,
+        page: "Login"
+
     })
 }
 
 const formRegister = (request, response) => {
     response.render("auth/register.pug", {
-        page: "Creating a new account..."
+        page: "New Account"
     })
 }
 
-export { formLogin, formRegister };
+const formPasswordRecovery = (request, response) => { 
+    response.render("/auth/password-recovery.pug", {
+        page: "Password Recovery"
+    })
+
+}
+
+export { formLogin, formRegister, formPasswordRecovery };
