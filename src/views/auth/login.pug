@@ -2,15 +2,16 @@ extends ../layout/index
 
 block content
     div.py-10
-        h1.text-center-4xl.my-10.font-extrabold.text-indigo-600.text-center Real
-            span.font-normal.text-black State
-        h2.text-center.text-3.l.font-extrabold= page
+        h1.text-center-4xl.my-10.font-extrabold.text-indigo-600.text-center.text-5xl Real
+            span.font-normal.text-black.text-3.l State
+        h2.text-center.text-3.l.font-extrabold.text-4xl= page
+        
 
         .mt-8.mx-auto.max-w-xl
             .bg-white.py-8.px-4.shadow
                 form.space-y-5 
                     div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email de Registro
+                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email 
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email")
                     
                     div 
@@ -18,7 +19,8 @@ block content
                         input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="**********" type="password" name="password")
 
                     div.flex.items-center.justify-between
-                        a.text-gray-500.text-xs(href="/auth/registro") ¿No tienes cuenta? Crea una
-                        a.text-gray-500.text-xs(href="/auth/olvide-password") Olvide mi Passoword
+                        a.text-gray-500.text-xs(href="login/register") Don't have an account? Create one
+                        a.text-gray-500.text-xs(href="") Forgot my Password
+
 
                     input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
