@@ -1,7 +1,21 @@
+# Directorio de módulos de Node.js
 node_modules/
 
+# Archivos generados por IDEs
 .DS_Store
-.vscode/
+.idea/
+
+# Archivos de configuración locales
 .env
 
-.idea/
+# Archivos y directorios de configuración de VS Code
+.vscode/
+
+# Archivos de copia de seguridad de SQL
+*.bak
+
+# Archivos de registro y respaldo de bases de datos SQL
+*.log
+*.ldf
+*.mdf
+*.ndf

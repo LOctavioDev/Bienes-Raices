@@ -8,7 +8,7 @@
     "start": "node src/index.js",
     "start-permanente": "nodemon src/index.js",
     "server": "nodemon src/server.js",
-    "css-compiler": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "css": "postcss src/public/css/tailwind.css -o src/public/css/app.css --watch"
   },
   "repository": {
     "type": "git",
@@ -23,18 +23,21 @@
     "RAICES",
     "TAILWIND"
   ],
-  "author": "Luis Octavio Lópes Martínez",
+  "author": "Luis Octavio López Martínez",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LOctavioDev/Bienes-Raices/issues"
   },
   "homepage": "https://github.com/LOctavioDev/Bienes-Raices#readme",
   "dependencies": {
-    "express": "^4.18.2",
-    "nodemon": "^3.0.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
     "tailwindcss": "^3.3.3"
   }
 }

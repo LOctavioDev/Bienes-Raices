@@ -1,4 +1,4 @@
-import express, { request, response } from "express";
+import express, { request, response } from 'express'
 
 const router = express.Router();
 
@@ -7,7 +7,8 @@ const router = express.Router();
 //     response.send("Hola Web");
 // })
 
-router.get('/', (request, response) => response.render('layout/index.pug'))
+// router.get('/', (request, response) => response.render('../views/layout/index.pug', {page: "Home"}))
+router.get('/', (request, response) => response.render("layout/index.pug", {page: "Home"}));
 
 
 router.get('/quienEres', (request, response) => {
@@ -32,27 +33,19 @@ router.get('/get/', (request, response) => {
 
 //PRACTICA 22 "PETICION ATRAVEZ DE LOS VERBOS HTTP"
 //RUTAS DE POST
-router.post('/', (request, response) => response.send("Hi web from POST verb"))
+router.post('/post', (request, response) => response.send("Hi web from POST verb"))
 
 
 //RUTAS DE PUT
-router.put('/', (request, response) => response.send("You are trying to update some properties of data using PUT"))
+router.put('/put', (request, response) => response.send("You are trying to update some properties of data using PUT"))
 
 
 //RUTAS DE PATCH
-router.patch('/', (request, response) => response.send("Hi, you are tryning to update all data object throught PACTH"))
+router.patch('/patch', (request, response) => response.send("Hi, you are tryning to update all data object throught PACTH"))
 
 
 //RUTAS DE PELETE
-router.delete('/', (request, response) => response.send("Are you sure that you want to DELETE data?"))
-
-
-
-
-
-
-
-
+router.delete('/delete', (request, response) => response.send("Are you sure that you want to DELETE data?"))
 
 
 export default router;

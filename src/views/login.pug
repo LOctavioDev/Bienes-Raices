@@ -1,10 +1,12 @@
-div 
-    h2#Encabezado(name = 'Encabezado1' class = "header text-center mensajeAlerta") Login
-        p Pleace type your credentials to acces
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Template Engine PUG
+    link(rel="stylesheet", href="/src/public/css/app.css")
 
-//- html
-//-   head
-//-     title Mi Aplicación Web
-//-   body
-//-     h1 Prueba
-//-     p Esta es una página generada con Pug.
+  body
+    div
+      h2#Encabezado(class="text-center text-aqua") Login
+      p Please type your credentials to access.
