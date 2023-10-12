@@ -1,4 +1,5 @@
 import express, { request, response } from 'express'
+import { formRegister, formPasswordRecovery, formLogin } from '../controllers/userController.js';
 
 const router = express.Router();
 
@@ -28,11 +29,14 @@ router.get('/misDatos', (request, response) => {
         "matricula": "220096",
     });
 });
+
 router.get('/get/', (request, response) => {
     response.send("Hola desde GET");
 });
 
 
+
+router.get("/register", formRegister)
 //PRACTICA 22 "PETICION ATRAVEZ DE LOS VERBOS HTTP"
 //RUTAS DE POST
 router.post('/post', (request, response) => response.send("Hi web from POST verb"))

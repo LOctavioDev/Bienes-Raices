@@ -17,10 +17,12 @@ const formRegister = (request, response) => {
 }
 
 const formPasswordRecovery = (request, response) => { 
-    response.render("/auth/password-recovery.pug", {
+    response.render("auth/recovery-password.pug", {
         page: "Password Recovery"
     })
 
 }
+
+
 
 export { formLogin, formRegister, formPasswordRecovery };

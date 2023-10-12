@@ -11,8 +11,8 @@ block content
             .bg-white.py-8.px-4.shadow
                 form.space-y-5 
                     div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Name 
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="full Name" type="text" name="email")
+                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="text") Name 
+                        input#text.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Full name" type="text" name="email")
 
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email 
@@ -24,10 +24,10 @@ block content
 
                     div 
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Confirm Password
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Renter your password" type="password" name="password")
+                        input#confirm-password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Renter your password" type="password" name="password")
 
                     div.flex.items-center.justify-between
-                        a.text-gray-500.text-xs(href="/login") Already have an account? Log in
-                        a.text-gray-500.text-xs(href="/auth/olvide-password") Forgot my Password
+                        a.text-gray-500.text-xs(href="/login" class="hover:text-indigo-600 hover:underline") Already have an account? Log in
+                        a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-indigo-600 hover:underline") Forgot my Password
 
                     input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
