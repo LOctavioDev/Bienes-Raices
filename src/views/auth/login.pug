@@ -2,24 +2,24 @@ extends ../layout/index
 
 block content
     div.py-10
-        h1.text-center-4xl.my-10.font-extrabold.text-indigo-600.text-center.text-5xl Real
+        h1.text-center-4xl.my-10.font-extrabold.text-custom4.text-center.text-5xl Real
             span.font-normal.text-black.text-3.l State
         h2.text-center.text-3.l.font-extrabold.text-4xl= page
-        
 
         .mt-8.mx-auto.max-w-xl
-            .bg-white.py-8.px-4.shadow
-                form.space-y-5
+            ..py-8.px-4.shadow
+                form.spaceY-5
                     div
-                      label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email
-                      input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email" required)
-                    
+                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email" required)
+                
                     div
-                      label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password
-                      input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="**********" type="password" name="password" required)
-                    
+                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password
+                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="**********" type="password" name="password" required)
+                
                     div.flex.items-center.justify-between.pt-5
-                      a.text-gray-500.text-xs(href="/login/register" class="hover:text-indigo-600 hover:underline") Don't have an account? Create one
-                      a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-indigo-600 hover:underline") Forgot my Password
-                    
-                    input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
+                        a.text-gray-500.text-xs(href="/login/register" class="hover:text-custom3 hover:underline") Don't have an account? Create one
+                        a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-custom3 hover:underline") Forgot my Password
+                
+                    input(class="w-full bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
+
