@@ -1,6 +1,7 @@
 // user.js
 import { DataTypes } from "sequelize";
 import db from '../config/db.js';
+import bycript from 'bcrypt'
 
 const User = db.define('tbb_users', {
     name: {
@@ -27,6 +28,14 @@ const User = db.define('tbb_users', {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
-});
+},{
+    hooks: {
+        beforeCreate: async(User) =>{
+           const salt = await bycript.genSalt(10);
+           User.password = await bycript.hash(User.password, salt)
+        }
+    }
+}
+);
 
 export default User;

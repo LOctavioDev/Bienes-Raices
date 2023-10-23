@@ -1,5 +1,7 @@
 import express, { request, response } from 'express'
 import { formRegister, formPasswordRecovery, formLogin } from '../controllers/userController.js';
+import { formProperty } from '../controllers/propertyController.js';
+import { insertProperty } from '../controllers/propertyController.js';
 
 const router = express.Router();
 
@@ -34,7 +36,7 @@ router.get('/get/', (request, response) => {
     response.send("Hola desde GET");
 });
 
-
+router.get("/register/property", formProperty)
 
 router.get("/register", formRegister)
 //PRACTICA 22 "PETICION ATRAVEZ DE LOS VERBOS HTTP"

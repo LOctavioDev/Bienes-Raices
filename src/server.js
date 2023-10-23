@@ -1,7 +1,9 @@
-import express from 'express';
-import generalRoutes from './routes/generalRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import express from 'express'
+import generalRoutes from './routes/generalRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import propertyRoute from './routes/propertyRoute.js'
 import db from './config/db.js'
+
 import User from './models/user.js';
 
 const app = express();
@@ -36,3 +38,4 @@ app.listen(port, () => {
 
 app.use('/', generalRoutes);
 app.use('/login', userRoutes);
+app.use('/property', propertyRoute)

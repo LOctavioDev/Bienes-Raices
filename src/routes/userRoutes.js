@@ -8,4 +8,5 @@ router.get("/register", formRegister)
 router.get("/password-recovery", formPasswordRecovery)
 router.post("/register", insertUser)
 
+
 export default router;

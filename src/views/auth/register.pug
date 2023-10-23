@@ -2,32 +2,49 @@ extends ../layout/index
 
 block content
     div.py-10
-        h1.text-center-4xl.my-10.font-extrabold.text-indigo-600.text-center.text-5xl Real
+        h1.text-center-4xl.my-10.font-extrabold.text-custom4.text-center.text-5xl Real
             span.font-normal.text-black.text-3.l State
         h2.text-center.text-3.l.font-extrabold.text-4xl= page
+
+        if errors
+            div(id="error-container")
+                each error in errors
+                    div(class="alert-message bg-red-500 text-white font-bold rounded-t px-4 py-2", role="alert")
+                        span(class="font-medium") Danger alert!
+                        p= error.msg
+
+    .mt-8.mx-auto.max-w-xl
+        .bg-custom6.py-8.px-4.shadow-lg.rounded-md 
+            form.space-y-5(action="register", method="POST" noValidate)
+                div 
+                    label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="text") Name 
+                    input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Full name" type="text" name="name" value=(user && user.name ? user.name : ''))
+
+                div 
+                    label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email 
+                    input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email" value=(user && user.email ? user.email : ''))
+                
+                div 
+                    label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password
+                    input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Enter your password" type="password" name="password" )
+
+                div 
+                    label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Confirm Password
+                    input#confirm-password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Renter your password" type="password" name="confirm-password" required)
+
+                div.flex.items-center.justify-between.pt5
+                    a.text-gray-500.text-xs(href="/login" class="hover:text-indigo-600 hover:underline") Already have an account? Log in
+                    a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-indigo-600 hover:underline") Forgot my Password
+
+                input(class="w-full bg-custom2  hover:bg-custom4 text-white font-bold py-3 cursor-pointer" type="submit" value="Register")
+                
+    script.
+        document.addEventListener("DOMContentLoaded", function () {
+            const errorMessages = document.querySelectorAll(".alert-message");
         
-
-        .mt-8.mx-auto.max-w-xl
-            .bg-white.py-8.px-4.shadow
-                form.space-y-5(action="register", method="POST")
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="text") Name 
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Full name" type="text" name="name")
-
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="email") Email 
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email")
-                    
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Enter your password" type="password" name="password")
-
-                    div 
-                        label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Confirm Password
-                        input#confirm-password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Renter your password" type="password" name="confirm-password")
-
-                    div.flex.items-center.justify-between
-                        a.text-gray-500.text-xs(href="/login" class="hover:text-indigo-600 hover:underline") Already have an account? Log in
-                        a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-indigo-600 hover:underline") Forgot my Password
-
-                    input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Login")
+            errorMessages.forEach((errorMessage, index) => {
+                setTimeout(function () {
+                    errorMessage.classList.add("hide");
+                }, 2000 * (index + 1)); 
+            });
+        });
