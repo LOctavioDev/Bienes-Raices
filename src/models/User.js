@@ -21,7 +21,8 @@ const User = db.define('tbb_users', {
 
     token: {
         type: DataTypes.STRING,
-        defaultValue: ""
+        defaultValue: "",
+        unique: true
     },
 
     verified: {

@@ -3,6 +3,7 @@
 import { request, response } from "express"
 import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
+import { generateToken } from "../lib/tokens.js"
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -50,6 +51,7 @@ const insertUser = async (request, response) => {
     const userExists = await User.findOne({ where : {email: request.body.email}})
     console.log(userExists);
 
+    const {name,email,password} = request.body
 
     if (userExists) {
         response.render("auth/register.pug", {
@@ -61,11 +63,15 @@ const insertUser = async (request, response) => {
             }
         });
         console.log(request.body.email);
-    } else if (errors.isEmpty()) {
-        // Si no hay errores crea el usuario en la base de datos
-        let newUser = await User.create(request.body);
+    }
+    else if (errors.isEmpty()) {
+        const token = generateToken() 
+        let newUser = await User.create({
+            name,email,password,token
+        });
         response.json({ success: true, message: "User registered successfully" });
-    } else {
+    } 
+    else {
         response.render("auth/register.pug", {
             page: "New Account",
             errors: errors.array(),
