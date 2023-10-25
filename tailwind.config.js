@@ -9,6 +9,7 @@ export default {
         custom3: '#D9CAC1',
         custom4: '#D96B43',
         custom5: '#8C423B',
+        custom6: '#f0eae4'
       },
     },
   },

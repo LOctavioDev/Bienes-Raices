@@ -4,6 +4,7 @@ import { request, response } from "express"
 import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
 import { generateToken } from "../lib/tokens.js"
+import { json } from "sequelize"
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -69,7 +70,11 @@ const insertUser = async (request, response) => {
         let newUser = await User.create({
             name,email,password,token
         });
-        response.json({ success: true, message: "User registered successfully" });
+        response.render("templates/message.pug", {
+            page: "New account created",
+            message: `We have send an email to: ${email}, Please verify your account`,
+            email: email,
+        })
     } 
     else {
         response.render("auth/register.pug", {

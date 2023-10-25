@@ -1,0 +1,29 @@
+extends ../layout/index
+
+block content
+    div.py-10
+        h1.text-center-4xl.my-10.font-extrabold.text-custom4.text-center.text-5xl Real
+            span.font-normal.text-black.text-3.l State
+        h2.text-center.text-3.l.font-extrabold.text-4xl= page
+
+        .mt-8.mx-auto.max-w-xl
+            .bg-custom6.py-8.px-4.shadow-lg.rounded-md
+                .div(class="alert-message-custom bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 relative")
+                    p.text-xl.font-bold.text-center.mb-4= "Info"
+                    p
+                        | We have sent an email to:
+                        span(style="color: red;")= ` ${email}`
+                        | , Please verify your account
+                    button(id="dismissButton" class="w-full bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer") Dismiss
+
+
+
+        script.
+            document.addEventListener("DOMContentLoaded", function () {
+                const dismissButton = document.getElementById("dismissButton");
+                const alertMessage = document.querySelector(".alert-message-custom");
+
+                dismissButton.addEventListener("click", function () {
+                    alertMessage.style.display = "none";
+                });
+            });
