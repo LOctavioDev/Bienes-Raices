@@ -5,6 +5,7 @@ import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
 import { generateToken } from "../lib/tokens.js"
 import { json } from "sequelize"
+import { emailRegister } from "../lib/emails.js"
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -75,6 +76,8 @@ const insertUser = async (request, response) => {
             message: `We have send an email to: ${email}, Please verify your account`,
             email: email,
         })
+
+        emailRegister({email, name, token})
     } 
     else {
         response.render("auth/register.pug", {
@@ -89,7 +92,21 @@ const insertUser = async (request, response) => {
     
 }
 
+const confirmAccount = async (req, res) => {
+    //TODO: verificar token
+    const tokenRecived = req.params.token
+    const userAwner = await User.findOne({where: {token: tokenRecived}})
+    if(!userAwner)
+    //TODO: PINTAR LA PAGINA DE ERROR
+        console.log("El token es invaido");
+
+    else
+        console.log("El token existe");
+
+    //TODO: actualizar el estado de la verificacion en la tabla de usuarios
+    //TODO: actializar vacio el token de activacion 
+
+}
 
 
-
-export { formLogin, formRegister, formPasswordRecovery, insertUser };
+export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount };
