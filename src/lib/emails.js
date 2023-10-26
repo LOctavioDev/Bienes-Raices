@@ -19,20 +19,131 @@ const emailRegister = async (userData) => {
 
   try {
     const info = await transporter.sendMail({
-      from: '220096@utxicotepec.edu.mx',
+      from: 'no-reply@realestate-220096.com',
       to: email,
       subject: 'RealState-220096: Verify your account.',
-      text: 'Welcome to Real Estate-220096. To continue, it is mandatory that you click on the link below to activate your account.',
       html: `
-        <p>Hello, ${name}</p>
-        <p>Thank you for choosing to search, sell, and buy properties. To continue using our platform, please click the link below.</p>
-        <a href="#">Click here to activate your account</a>
-        <p>Best regards</p>
-        <p>Luis Octavio Lopez Martinez</p>
-        <p>CEO of RealState-220096</p>
-        <p>* If you did not create this account, please ignore this email.</p>
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f0eae4;
+              }
+    
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+              }
+    
+              header {
+                text-align: center;
+                background-color: #1D2173;
+                color: #ffffff;
+                padding: 10px 0;
+              }
+    
+              h1 {
+                font-size: 28px;
+                font-weight: bold;
+                color: #D96B43;
+                text-align: center;
+                margin: 20px 0;
+              }
+    
+              span {
+                font-size: 18px;
+                font-weight: normal;
+                color: #000000;
+              }
+    
+              p {
+                font-size: 14px;
+                color: #000000;
+                text-align: justify;
+                margin: 10px 0;
+              }
+    
+              a {
+                display: block;
+                width: 200px;
+                margin: 0 auto;
+                background-color: #D96B43;
+                color: #ffffff;
+                padding: 10px 20px;
+                text-align: center;
+                font-size: 16px;
+                text-decoration: none;
+                margin-top: 20px;
+              }
+    
+              footer {
+                text-align: center;
+                background-color: #1D2173;
+                color: #ffffff;
+                padding: 10px 0;
+              }
+    
+              .signature {
+                font-size: 14px;
+                text-align: left;
+                margin: 20px 0;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+            
+            <header style="display: flex; justify-content: space-between; align-items: center;">
+  <div style="display: flex; align-items: center;">
+    <h1 style="font-size: 28px; font-weight: bold; color: #D96B43;">Real<span>State</span></h1>
+  </div>
+  <div>
+    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
+      <i class="fab fa-facebook"></i>
+    </a>
+    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="#" style="text-decoration: none; color: #1D2173; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+</header>
+
+
+
+          
+              <p style="font-size: 18px; margin-top: 20px;">Welcome to RealState-220096, ${name}!</p>
+              <p>Thank you for choosing to search, sell, and buy properties. To continue using our platform, please click the link below to activate your account:</p>
+              <a href="#" class="button">Click here to activate your account</a>
+              <p>Best regards,</p>
+              <div class="signature">
+                <p>Luis Octavio Lopez Martinez</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Firma_Josep_Irla.png/1200px-Firma_Josep_Irla.png" alt="Firma" style="display: block; margin: 20px 0; width: 100px; height: auto;">
+
+                <p>CEO of RealState-220096</p>
+              </div>
+              <p>* If you did not create this account, please ignore this email.</p>
+            </div>
+            <footer>
+              &copy; 2023 RealState-220096
+            </footer>
+          </body>
+        </html>
       `,
     });
+    
+    
+    
+    
 
     console.log(`Email sent: ${info.response}`);
   } catch (error) {
