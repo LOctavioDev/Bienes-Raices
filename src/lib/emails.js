@@ -116,14 +116,10 @@ const emailRegister = async (userData) => {
       <i class="fab fa-instagram"></i>
     </a>
   </div>
-</header>
-
-
-
-          
+</header> 
               <p style="font-size: 18px; margin-top: 20px;">Welcome to RealState-220096, ${name}!</p>
               <p>Thank you for choosing to search, sell, and buy properties. To continue using our platform, please click the link below to activate your account:</p>
-              <a href="#" class="button">Click here to activate your account</a>
+              <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/login/confirm/${token}" class="button">Click here to activate your account</a>
               <p>Best regards,</p>
               <div class="signature">
                 <p>Luis Octavio Lopez Martinez</p>
@@ -141,10 +137,6 @@ const emailRegister = async (userData) => {
       `,
     });
     
-    
-    
-    
-
     console.log(`Email sent: ${info.response}`);
   } catch (error) {
     console.error(`Error sending email: ${error}`);

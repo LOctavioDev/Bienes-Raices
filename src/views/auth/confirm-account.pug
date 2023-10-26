@@ -1,0 +1,12 @@
+extends ../layout/index
+
+block content
+  div.py-10
+    h1.text-center-4xl.my-10.font-extrabold.text-custom4.text-center.text-5xl Real
+      span.font-normal.text-black.text-3.l State
+    h2.text-center.text-3.l.font-extrabold.text-4xl= page
+  div.bg-white.shadow.py-8.px-4.border-lg
+    p(class=`text-xl font-bold text-center my-10 ${error ? 'bg-red-500 text-white' : 'bg-green-500 text-black'}`)= msg
+
+    a(href="/login")
+        button.w-full(class="bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer mt-4")

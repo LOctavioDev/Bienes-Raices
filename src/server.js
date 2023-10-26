@@ -1,15 +1,16 @@
 import express from 'express'
 import generalRoutes from './routes/generalRoutes.js'
 import userRoutes from './routes/userRoutes.js'
-import propertyRoute from './routes/propertyRoute.js'
 import db from './config/db.js'
-
 import User from './models/user.js';
+import csrf from 'csurf';
+import cookieParser from 'cookie-parser';
+
 
 const app = express();
 const port = 3000;
 
-// app.use(express.static('src/public'));
+//app.use(express.static('src/public'));
 app.set('view engine', 'pug');
 app.set('views', './src/views');
 app.use(express.static('./src/public'))
@@ -19,6 +20,12 @@ app.use(express.urlencoded({
   extended: false
 }))
 
+//HABILIATR COOKIE PARSE PARA LEER Y ESCRIBIR EN LAS COOKIEES DEL NAVEGADOR
+app.use(cookieParser());
+//HABILITAER CSRF PROTECION
+app.use(csrf({
+  cookie: true
+}));
 
 db.authenticate()
   .then(() => {
@@ -38,4 +45,3 @@ app.listen(port, () => {
 
 app.use('/', generalRoutes);
 app.use('/login', userRoutes);
-app.use('/property', propertyRoute)
