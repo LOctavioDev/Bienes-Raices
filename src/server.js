@@ -3,12 +3,16 @@ import generalRoutes from './routes/generalRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import db from './config/db.js'
 import User from './models/user.js';
-import csrf from 'csurf';
-import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import dotemv from 'dotenv';
+
+dotemv.config({path: 'src/.env'})
 
 
 const app = express();
-const port = 3000;
+
+// HABILITAR LA PROYTECCION A TRAVEZ DE HELMET
+app.use(helmet());
 
 //app.use(express.static('src/public'));
 app.set('view engine', 'pug');
@@ -19,13 +23,6 @@ app.use(express.static('./src/public'))
 app.use(express.urlencoded({
   extended: false
 }))
-
-//HABILIATR COOKIE PARSE PARA LEER Y ESCRIBIR EN LAS COOKIEES DEL NAVEGADOR
-app.use(cookieParser());
-//HABILITAER CSRF PROTECION
-app.use(csrf({
-  cookie: true
-}));
 
 db.authenticate()
   .then(() => {
@@ -39,8 +36,8 @@ db.authenticate()
   });
 
 
-app.listen(port, () => {
-    console.log(`El servicio HTTP ha sido iniciado\nEl servicio está escuchando en el puerto ${port}`);
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(`El servicio HTTP ha sido iniciado\nEl servicio está escuchando en el puerto ${process.env.SERVER_PORT}`);
 });
 
 app.use('/', generalRoutes);

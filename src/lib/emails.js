@@ -102,20 +102,6 @@ const emailRegister = async (userData) => {
   <div style="display: flex; align-items: center;">
     <h1 style="font-size: 28px; font-weight: bold; color: #D96B43;">Real<span>State</span></h1>
   </div>
-  <div>
-    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
-      <i class="fab fa-facebook"></i>
-    </a>
-    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
-      <i class="fab fa-twitter"></i>
-    </a>
-    <a href="#" style="text-decoration: none; color: #1D2173; margin-right: 5px; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
-      <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="#" style="text-decoration: none; color: #1D2173; display: inline-block; width: 16px; height: 16px; background-color: #D96B43; border-radius: 100%; text-align: center; line-height: 16px; font-size: 14px;">
-      <i class="fab fa-instagram"></i>
-    </a>
-  </div>
 </header> 
               <p style="font-size: 18px; margin-top: 20px;">Welcome to RealState-220096, ${name}!</p>
               <p>Thank you for choosing to search, sell, and buy properties. To continue using our platform, please click the link below to activate your account:</p>
@@ -128,10 +114,10 @@ const emailRegister = async (userData) => {
                 <p>CEO of RealState-220096</p>
               </div>
               <p>* If you did not create this account, please ignore this email.</p>
+              <footer>
+                &copy; 2023 RealState-220096
+              </footer>
             </div>
-            <footer>
-              &copy; 2023 RealState-220096
-            </footer>
           </body>
         </html>
       `,

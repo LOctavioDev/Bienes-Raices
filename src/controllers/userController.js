@@ -6,29 +6,24 @@ import { check, validationResult } from "express-validator"
 import { generateToken } from "../lib/tokens.js"
 import { json } from "sequelize"
 import { emailRegister } from "../lib/emails.js"
-import csurf from "csurf";
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
         isLogged: false,
         page: "Login",
-        csrfToken: request.csrfToken()
 
     })
 }
 
 const formRegister = (request, response) => {
-    console.log(request.csrfToken())
     response.render("auth/register.pug", {
         page: "New Account",
-        csrfToken: request.csrfToken()
     })
 }
 
 const formPasswordRecovery = (request, response) => { 
     response.render("auth/recovery-password.pug", {
         page: "Password Recovery",
-        csrfToken: request.csrfToken()
     })
 
 }
@@ -63,7 +58,6 @@ const insertUser = async (request, response) => {
     if (userExists) {
         response.render("auth/register.pug", {
             page: "New Account",
-            csrfToken: request.csrfToken(),
             errors: [{ msg: `The user with email "${request.body.email}" already exists` }],
             user: {
                 name: request.body.name,
@@ -81,7 +75,6 @@ const insertUser = async (request, response) => {
             page: "New account created",
             message: `We have send an email to: ${email}, Please verify your account`,
             email: email,
-            csrfToken: request.csrfToken()
         })
 
         emailRegister({email, name, token})
@@ -89,7 +82,6 @@ const insertUser = async (request, response) => {
     else {
         response.render("auth/register.pug", {
             page: "New Account",
-            csrfToken: request.csrfToken(),
             errors: errors.array(),
             user: {
                 name: request.body.name,
@@ -111,7 +103,6 @@ const confirmAccount = async (req, res) => {
                 page: 'Status verification',
                 error: true,
                 msg: 'We have found some issues and couldnot verify your account verification.',
-                csrfToken: request.csrfToken()
             })
     }
 
@@ -125,7 +116,6 @@ const confirmAccount = async (req, res) => {
             page: 'Status verification',
             error: false,
             msg: 'Your account has been confirmed succesfuly.',
-            csrfToken: request.csrfToken()
         })
     }
 
