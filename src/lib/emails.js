@@ -3,18 +3,17 @@ import nodemailer from 'nodemailer'
 
 dotenv.config({path: 'src/.env'})
 
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
 const emailRegister = async (userData) => {
   console.log(`Trying to send an email to activate the user's account: ${userData.email}`);
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-
   const { name, email, token } = userData;
 
   try {
@@ -129,4 +128,121 @@ const emailRegister = async (userData) => {
   }
 };
 
-export { emailRegister };
+
+const emailPasswordRecovery = async (userData) => {
+  console.log(`Intentando enviar un correo electrónico para recuperación de contraseña a: ${userData.email}`);
+  const { name, email, token } = userData;
+
+  try {
+      const info = await transporter.sendMail({
+          from: 'no-reply@realestate-220096.com',
+          to: email,
+          subject: 'RealState-220096: Recuperación de contraseña',
+          html: `
+              <html>
+                  <head>
+                      <style>
+                      body {
+                        font-family: sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #f0eae4;
+                      }
+            
+                      .container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                        padding: 20px;
+                        background-color: #ffffff;
+                      }
+            
+                      header {
+                        text-align: center;
+                        background-color: #1D2173;
+                        color: #ffffff;
+                        padding: 10px 0;
+                      }
+            
+                      h1 {
+                        font-size: 28px;
+                        font-weight: bold;
+                        color: #D96B43;
+                        text-align: center;
+                        margin: 20px 0;
+                      }
+            
+                      span {
+                        font-size: 18px;
+                        font-weight: normal;
+                        color: #000000;
+                      }
+            
+                      p {
+                        font-size: 14px;
+                        color: #000000;
+                        text-align: justify;
+                        margin: 10px 0;
+                      }
+            
+                      a {
+                        display: block;
+                        width: 200px;
+                        margin: 0 auto;
+                        background-color: #D96B43;
+                        color: #ffffff;
+                        padding: 10px 20px;
+                        text-align: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        margin-top: 20px;
+                      }
+            
+                      footer {
+                        text-align: center;
+                        background-color: #1D2173;
+                        color: #ffffff;
+                        padding: 10px 0;
+                      }
+            
+                      .signature {
+                        font-size: 14px;
+                        text-align: left;
+                        margin: 20px 0;
+                      }
+                          
+                      </style>
+                  </head>
+                  <body>
+                      <div class="container">
+                          <header>
+                              <!-- Encabezado del correo (si es necesario) -->
+                          </header>
+                          <p>Bienvenido a RealState-220096, ${name}.</p>
+                          <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Para continuar con el proceso de recuperación de contraseña, haz clic en el siguiente enlace:</p>
+                          <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/reset-password/${token}" class="button">Restablecer la contraseña</a>
+                          <p>Atentamente,</p>
+                          <div class="signature">
+                              <p>Luis Octavio Lopez Martinez</p>
+                              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Firma_Josep_Irla.png/1200px-Firma_Josep_Irla.png" alt="Firma" style="display: block; margin: 20px 0; width: 100px; height: auto;">
+                              <p>CEO de RealState-220096</p>
+                          </div>
+                          <p>* Si no solicitaste este restablecimiento de contraseña, por favor ignora este correo.</p>
+                          <footer>
+                              &copy; 2023 RealState-220096
+                          </footer>
+                      </div>
+                  </body>
+              </html>
+          `,
+      });
+
+      console.log(`Correo electrónico enviado: ${info.response}`);
+  } catch (error) {
+      console.error(`Error al enviar el correo electrónico: ${error}`);
+  }
+};
+
+
+
+
+export { emailRegister, emailPasswordRecovery };

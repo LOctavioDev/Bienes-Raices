@@ -5,7 +5,7 @@ import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
 import { generateToken } from "../lib/tokens.js"
 import { json } from "sequelize"
-import { emailRegister } from "../lib/emails.js"
+import { emailRegister,emailPasswordRecovery } from "../lib/emails.js"
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -124,5 +124,67 @@ const confirmAccount = async (req, res) => {
 
 }
 
+const updatePassword = (req, res) => {
 
-export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount };
+    return 0;
+}
+
+const emailChangePassword = async (req, res) => {
+    console.log(`El usuario ha solicitado cambiar su contraseña, se enviará un correo electrónico a ${req.body.email} con el enlace para actualizar su contraseña.`);
+
+    // Validar el campo de correo electrónico
+    await check("email").notEmpty().withMessage("El correo electrónico es obligatorio").isEmail().withMessage("El formato del correo electrónico es incorrecto").run(req);
+    
+    const resultValidate = validationResult(req);
+
+    if (resultValidate.isEmpty()) {
+        // Buscar al usuario por su dirección de correo electrónico
+        const userExists = await User.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+
+        if (!userExists) {
+            console.log(`El usuario con el correo electrónico ${req.body.email} que intenta recuperar su contraseña no existe.`);
+            res.render("templates/message.pug", {
+                page: "Usuario no encontrado",
+                message: `No existe ningún usuario asociado al correo electrónico: ${req.body.email} en la base de datos.`,
+                type: "error"
+            });
+        } else {
+            
+            const token = generateToken();
+            
+            
+            userExists.token = token;
+            await userExists.save();
+
+            // TODO: Enviar un correo con el nuevo token y un enlace para restablecer la contraseña
+            emailPasswordRecovery({
+                name: userExists.name,
+                email: userExists.email,
+                token: userExists.token
+            });
+
+            res.render('templates/message.pug', {
+                page: 'Correo electrónico enviado',
+                message: `Hemos enviado un correo electrónico a la dirección: ${userExists.email}`,
+                type: "success"
+            });
+        }
+    } else {
+        res.render('auth/confirm-account.pug', {
+            page: 'Verificación de estado',
+            error: false,
+            message: 'Tu cuenta ha sido verificada con éxito.',
+            button: 'Ahora puedes iniciar sesión',
+            type: "success"
+        });
+    }
+};
+
+
+
+
+export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword };
