@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/LOctavioDev/Bienes-Raices#readme",
   "dependencies": {
+    "chalk": "^5.3.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "express-validator": "^7.0.1",

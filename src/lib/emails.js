@@ -215,11 +215,10 @@ const emailPasswordRecovery = async (userData) => {
                   <body>
                       <div class="container">
                           <header>
-                              <!-- Encabezado del correo (si es necesario) -->
                           </header>
                           <p>Bienvenido a RealState-220096, ${name}.</p>
                           <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Para continuar con el proceso de recuperación de contraseña, haz clic en el siguiente enlace:</p>
-                          <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/reset-password/${token}" class="button">Restablecer la contraseña</a>
+                          <a href="http://${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/login/update-password/${token}" class="button">Restablecer la contraseña</a>
                           <p>Atentamente,</p>
                           <div class="signature">
                               <p>Luis Octavio Lopez Martinez</p>

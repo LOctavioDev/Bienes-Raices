@@ -14,9 +14,7 @@ block content
                         | We have sent an email to:
                         span(style="color: red;")= ` ${email}`
                         | , Please verify your account
-                    button(id="dismissButton" class="w-full bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer") Dismiss
-
-
+                    button(id="dismissButton" class="w-full bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer m-4") Dismiss
 
         script.
             document.addEventListener("DOMContentLoaded", function () {
@@ -24,6 +22,6 @@ block content
                 const alertMessage = document.querySelector(".alert-message-custom");
 
                 dismissButton.addEventListener("click", function () {
-                    alertMessage.style.display = "none";
+                    window.location.href = "/login";
                 });
             });

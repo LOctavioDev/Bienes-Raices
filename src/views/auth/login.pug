@@ -6,20 +6,35 @@ block content
             span.font-normal.text-black.text-3.l State
         h2.text-center.text-3.l.font-extrabold.text-4xl= page
 
+        if errors
+            each error in errors
+                div(class="alert-message bg-red-500 text-white font-bold rounded-t px-4 py-2", role="alert")
+                    span(class="font-medium") Danger alert!
+                    p= error.msg
 
         .mt-8.mx-auto.max-w-xl
             .py-8.px-5.shadow-lg.bg-custom6.rounded-md 
-                form.spaceY-5
+                form(action="login" method="POST" noValidate).spaceY-5
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email" required)
+                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="user@dominian.com" type="email" name="email" value=(user && user.email ? user.email : ''))
                 
                     div
                         label.block.text-sm.uppercase.text-gray-700.mb-3.font-bold(for="password") Password
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="**********" type="password" name="password" required)
+                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="**********" type="password" name="password")
                 
                     div.flex.items-center.justify-between.pt-5
                         a.text-gray-500.text-xs(href="/login/register" class="hover:text-custom3 hover:underline") Don't have an account? Create one
                         a.text-gray-500.text-xs(href="/login/password-recovery" class="hover:text-custom3 hover:underline") Forgot my Password
                 
                     input(class="w-full bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer mt-4" type="submit" value="Login")
+                    
+    script.
+        document.addEventListener("DOMContentLoaded", function () {
+        const errorMessages = document.querySelectorAll(".alert-message");
+         errorMessages.forEach((errorMessage, index) => {
+             setTimeout(function () {
+              errorMessage.classList.add("hide");
+            }, 2000 * (index + 1));
+            });
+         });

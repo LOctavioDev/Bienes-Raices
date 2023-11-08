@@ -6,6 +6,7 @@ import { check, validationResult } from "express-validator"
 import { generateToken } from "../lib/tokens.js"
 import { json } from "sequelize"
 import { emailRegister,emailPasswordRecovery } from "../lib/emails.js"
+import bcrypt from "bcrypt";
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -42,7 +43,7 @@ const insertUser = async (request, response) => {
 
     await check("confirm-password")
         .notEmpty().withMessage("This field is required")
-        .isLength({ min: 8 }).withMessage("This field requires at least 8 characters")
+        .isLength({ min:8, max:20}).withMessage("This field requires at least 8 characters")
         .equals(request.body.password).withMessage("Both passwords must be the same")
         .run(request);
 
@@ -92,6 +93,27 @@ const insertUser = async (request, response) => {
     
 }
 
+const formPasswordUpdate = async (request, response) => {
+    const {token}= request.params;
+    const user = await User.findOne({where: {token}})
+    console.log(user);
+    if(!user){
+        response.render('auth/confirm-account', {
+            page: 'password recovery',
+            error: true,
+            msg: 'We have found some issues and could not verify your account.',
+            button: 'Access denied'
+
+        })
+    }
+
+    response.render("../views/auth/password-update.pug", {
+        isLogged: false,
+        page: "Password update",
+
+    })
+}
+
 const confirmAccount = async (req, res) => {
     //TODO: verificar token
     const tokenRecived = req.params.token
@@ -124,67 +146,178 @@ const confirmAccount = async (req, res) => {
 
 }
 
-const updatePassword = (req, res) => {
+const updatePassword = async (req, res) => {
+    console.log(`Guardando password`);
+  
+    await check("password")
+      .notEmpty()
+      .withMessage("YOUR PASSWORD IS REQUIRED")
+      .isLength({ min: 8 })
+      .withMessage("YOUR PASSWORD MUST HAVE 8 CHARACTERS AT LEAST")
+      .run(req);
+    await check("confirmPassword")
+      .notEmpty()
+      .withMessage("YOUR PASSWORD IS REQUIRED")
+      .isLength({ min: 8 })
+      .withMessage("YOUR PASSWORD MUST HAVE 8 CHARACTERS AT LEAST")
+      .equals(req.body.password)
+      .withMessage("BOTH PASSWORDS FIELDS MUST BE THE SAME")
+      .run(req);
+    let resultValidate = validationResult(req);
+    if (resultValidate.isEmpty()) {
+      const { token } = req.params;
+      const { password } = req.body;
+      const user = await User.findOne({ where: { token } });
+  
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+      user.token = null;
+      await user.save();
+  
+      res.render("auth/confirm-account.pug", {
+        page: "Password recovery",
+        button: "Back to login",
+        msg: "The password has been changed successfully",
+      });
+    } else {
+      res.render("auth/password-update.pug", {
+        page: "New account",
+        errors: resultValidate.array(),
+      });
+    }
+  };
 
-    return 0;
-}
+  const emailChangePassword = async (req, res) => {
+    const { email } = req.body; 
 
-const emailChangePassword = async (req, res) => {
-    console.log(`El usuario ha solicitado cambiar su contraseña, se enviará un correo electrónico a ${req.body.email} con el enlace para actualizar su contraseña.`);
-
-    // Validar el campo de correo electrónico
-    await check("email").notEmpty().withMessage("El correo electrónico es obligatorio").isEmail().withMessage("El formato del correo electrónico es incorrecto").run(req);
+    console.log(`El usuario ha solicitado cambiar su contraseña y se le enviará un correo electrónico a ${email} con el enlace para actualizar su contraseña.`);
     
+    // VALIDACION de correo electrónico
+    await check("email")
+        .notEmpty().withMessage("YOUR EMAIL IS REQUIRED")
+        .isEmail().withMessage("THIS IS NOT EMAIL FORMAT")
+        .run(req);
+
     const resultValidate = validationResult(req);
 
     if (resultValidate.isEmpty()) {
-        // Buscar al usuario por su dirección de correo electrónico
         const userExists = await User.findOne({
             where: {
-                email: req.body.email
+                email
             }
         });
 
-        if (!userExists) {
-            console.log(`El usuario con el correo electrónico ${req.body.email} que intenta recuperar su contraseña no existe.`);
+        if (!userExists) { 
+            console.log(`El usuario que está intentando recuperar su contraseña no existe`);
             res.render("templates/message.pug", {
-                page: "Usuario no encontrado",
-                message: `No existe ningún usuario asociado al correo electrónico: ${req.body.email} en la base de datos.`,
+                page: "User not found",
+                part1: "The user associated with:",
+                part2: "does not exist in the database.",
+                message: email,
                 type: "error"
             });
-        } else {
-            
+        }
+        else {
+            console.log("Envío de correo");
             const token = generateToken();
-            
-            
             userExists.token = token;
-            await userExists.save();
+            userExists.save();
 
-            // TODO: Enviar un correo con el nuevo token y un enlace para restablecer la contraseña
-            emailPasswordRecovery({
-                name: userExists.name,
-                email: userExists.email,
-                token: userExists.token
-            });
+            emailPasswordRecovery({ name: userExists.name, email, token });
 
-            res.render('templates/message.pug', {
-                page: 'Correo electrónico enviado',
-                message: `Hemos enviado un correo electrónico a la dirección: ${userExists.email}`,
+            res.render('templates/message', {
+                page: 'Email Send',
+                email: email, 
                 type: "success"
             });
         }
-    } else {
-        res.render('auth/confirm-account.pug', {
-            page: 'Verificación de estado',
+    }
+    else {
+        res.render('auth/recovery-password', {
+            page: 'Status verification',
             error: false,
-            message: 'Tu cuenta ha sido verificada con éxito.',
-            button: 'Ahora puedes iniciar sesión',
-            type: "success"
+            msg: 'Your account has been confirmed successfully.',
+            button: 'Now you can log in',
+            errors: resultValidate.array(),
+            user: {
+                name: req.body.name,
+                email
+            }
         });
     }
 };
 
 
+const authenticateUser = async (request, response) => {
+    await check("email")
+        .notEmpty().withMessage("El campo de correo electrónico es obligatorio")
+        .isEmail().withMessage("Este no es un formato de correo electrónico válido")
+        .run(request);
+
+    await check("password")
+        .notEmpty().withMessage("El campo de contraseña es obligatorio")
+        .isLength({ min: 8, max: 20 }).withMessage("La contraseña debe contener entre 8 y 20 caracteres")
+        .run(request);
+
+    const resultValidation = validationResult(request);
+
+    if (resultValidation.isEmpty()) {
+        console.log("Todo está correcto.");
+        const {email,password} = request.body;
+        console.log(`EL USUARIO ${email} ESTA INTENTANDO ACCEDER AL SISTEMA`);
+        const userExists = await User.findOne({where:{email}})
+
+        if(!userExists){
+            console.log("EL USUARIO NO EXISTE");
+            response.render("auth/login.pug", {
+                page: "Login",
+                errors: [{msg:`The user associated to: ${email} was not found`}],
+                user: {
+                    email: request.body.email
+                }
+            });
+        }
+        else{
+            console.log("EL USUARIO EXISTE");
+            if(!userExists.verified){
+                console.log("EXISTE PERO NO ESTA VERIFICADO");
+                response.render("auth/login.pug", {
+                    page: "Login",
+                    errors: [{msg:`The user associated to: ${email} was found but not verified`}],
+                    user: {
+                        email: request.body.email
+                    }
+                })
+            }
+            else{
+                if(userExists.verifiedPassword(password)){
+                    response.render("auth/login.pug", {
+                        page: "Login",
+                        errors: [{msg:`User adn password does not match`}],
+                        user: {
+                            email: request.body.email
+                        }
+                    })
+                }else{
+                    response.send("Vivian los homosexuales")
+                }
+            }
+
+        }
+            
+
+    } else {
+        response.render("auth/login.pug", {
+            page: "Login",
+            errors: resultValidation.array(),
+            user: {
+                email: request.body.email
+            }
+        });
+    }
+}
 
 
-export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword };
+
+
+export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword, authenticateUser, formPasswordUpdate };
