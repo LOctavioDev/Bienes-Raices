@@ -1,5 +1,3 @@
-// import { response } from "express"
-
 import { request, response } from "express"
 import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
@@ -7,6 +5,10 @@ import { generateToken } from "../lib/tokens.js"
 import { json } from "sequelize"
 import { emailRegister,emailPasswordRecovery } from "../lib/emails.js"
 import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv';
+
+dotenv.config({path: 'src/.env'})
 
 const formLogin = (request, response) => {
     response.render("auth/login.pug", {
@@ -285,7 +287,7 @@ const authenticateUser = async (request, response) => {
                     page: "Login",
                     errors: [{msg:`The user associated to: ${email} was found but not verified`}],
                     user: {
-                        email: request.body.email
+                        email
                     }
                 })
             }
@@ -295,11 +297,14 @@ const authenticateUser = async (request, response) => {
                         page: "Login",
                         errors: [{msg:`User adn password does not match`}],
                         user: {
-                            email: request.body.email
+                            email
                         }
                     })
                 }else{
-                    response.send("Vivian los homosexuales")
+                    console.log(`EL USUARIO: ${email}`);
+                    //TODO Generer el token de acceso
+                    
+                    response.send("Acceder")
                 }
             }
 

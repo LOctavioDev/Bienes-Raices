@@ -40,7 +40,6 @@ const User = db.define('tbb_users', {
 );
 
 User.prototype.verifiedPassword = function(password){
-
     return bycript.compareSync(password,this.password)
 
 }

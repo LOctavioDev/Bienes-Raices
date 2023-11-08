@@ -33,30 +33,30 @@ app.use((req, res, next) => {
 
 db.authenticate()
   .then(() => {
-    console.log(chalk.green('=============================='));
+    console.log(chalk.green('================================================='));
     console.log(chalk.green('Conexión a la base de datos establecida con éxito'));
-    console.log(chalk.green('=============================='));
+    console.log(chalk.green('================================================='));
 
     return db.sync();
   })
   .then(() => {
-    console.log(chalk.green('============================================'));
+    console.log(chalk.green('============================================================='));
     console.log(chalk.green('Se han sincronizado las tablas existentes en la base de datos'));
-    console.log(chalk.green('============================================'));
+    console.log(chalk.green('============================================================='));
   })
   .catch((error) => {
-    console.error(chalk.red('=============================='));
+    console.error(chalk.red('============================================'));
     console.error(chalk.red('Error al conectar a la base de datos:', error));
-    console.error(chalk.red('=============================='));
+    console.error(chalk.red('============================================'));
   });
 
-
-  app.listen(process.env.SERVER_PORT, () => {
-    console.log('===================================');
-    console.log('El servicio HTTP ha sido iniciado');
-    console.log(`El servicio está escuchando en el puerto ${process.env.SERVER_PORT}`);
-    console.log('===================================');
-  });
+// Iniciar el servicio HTTP
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(chalk.blue('==================================='));
+    console.log(chalk.blue('El servicio HTTP ha sido iniciado'));
+    console.log(chalk.blue(`El servicio está escuchando en el puerto ${process.env.SERVER_PORT}`));
+    console.log(chalk.blue('==================================='));
+});
   
 
 app.use('/', generalRoutes);
