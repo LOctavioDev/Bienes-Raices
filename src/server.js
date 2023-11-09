@@ -1,11 +1,14 @@
 import express from 'express'
 import generalRoutes from './routes/generalRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import propertyRoutes from './routes/propertyRoutes.js'
 import db from './config/db.js'
 import User from './models/user.js';
 import helmet from 'helmet';
 import dotemv from 'dotenv';
 import chalk from 'chalk';
+import { cookie } from 'express-validator';
+import cookieParser from 'cookie-parser';
 
 dotemv.config({path: 'src/.env'})
 
@@ -25,6 +28,8 @@ app.use(express.urlencoded({
   extended: false
 }))
 
+//HABILITAR EL USO DE COOKIES
+app.use(cookieParser({cookie: true}))
 
 app.use((req, res, next) => {
   res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'");
@@ -52,12 +57,13 @@ db.authenticate()
 
 // Iniciar el servicio HTTP
 app.listen(process.env.SERVER_PORT, () => {
-    console.log(chalk.blue('==================================='));
+    console.log(chalk.blue('============================================='));
     console.log(chalk.blue('El servicio HTTP ha sido iniciado'));
     console.log(chalk.blue(`El servicio está escuchando en el puerto ${process.env.SERVER_PORT}`));
-    console.log(chalk.blue('==================================='));
+    console.log(chalk.blue('============================================='));
 });
   
 
 app.use('/', generalRoutes);
 app.use('/login', userRoutes);
+app.use('/properties', propertyRoutes)

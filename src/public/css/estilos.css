@@ -1,0 +1,42 @@
+/* Estilos para las alertas de error */
+.alert-message {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s, transform 0.5s ease-out;
+    transform: translateY(0);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #ff0000;
+    color: #ffffff;
+    text-align: center;
+    z-index: 1000;
+    margin: 0;
+  }
+  
+  .alert-message.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+    display: none;
+  }
+  
+  
+  .alert-message-custom {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s, transform 0.5s ease-out;
+    transform: translateY(0);
+    background-color: #f0eae4;
+    color: #000000;
+    text-align: center;
+    z-index: 1000;
+    margin: 0;
+  }
+  
+  .alert-message-custom.hide {
+    opacity: 0;
+    transform: translateY(-10px);
+    display: none;
+  }
+  

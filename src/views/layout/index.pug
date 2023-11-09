@@ -5,6 +5,8 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Real State &lt; 220096 &gt; | #{page}
         link(rel="stylesheet", href="/css/app.css")   
-    body.min-h-screen(class="bg-custom3") 
-        main(class="mx-auto container mt-10 px-2")
+    body.min-h-screen(class="bg-custom3")  
+        if showHeader
+            include navbar 
+        main(class="mx-auto container mrt-10 px2")
             block content

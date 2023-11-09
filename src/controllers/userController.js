@@ -1,12 +1,12 @@
 import { request, response } from "express"
 import User from "../models/user.js"
 import { check, validationResult } from "express-validator"
-import { generateToken } from "../lib/tokens.js"
+import { generateToken, generateJwt } from "../lib/tokens.js"
 import { json } from "sequelize"
 import { emailRegister,emailPasswordRecovery } from "../lib/emails.js"
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
+import cookieParser from "cookie-parser"
 
 dotenv.config({path: 'src/.env'})
 
@@ -30,7 +30,6 @@ const formPasswordRecovery = (request, response) => {
     })
 
 }
-
 
 const insertUser = async (request, response) => { 
     console.log("Intentando registrar los datos del usuario en la base de datos");
@@ -249,7 +248,6 @@ const updatePassword = async (req, res) => {
     }
 };
 
-
 const authenticateUser = async (request, response) => {
     await check("email")
         .notEmpty().withMessage("El campo de correo electrónico es obligatorio")
@@ -303,13 +301,12 @@ const authenticateUser = async (request, response) => {
                 }else{
                     console.log(`EL USUARIO: ${email}`);
                     //TODO Generer el token de acceso
-                    
-                    response.send("Acceder")
+                    const token = generateJwt(userExists.id)
+                    response.cookie('_token',token,{httpOnly:true}).redirect('login/home')
+                    // secure:true #ESTO SOLO SE HABILITARA EN CASO DE TENER UN CERIFICADO HTTPS
                 }
             }
-
         }
-            
 
     } else {
         response.render("auth/login.pug", {
@@ -322,7 +319,11 @@ const authenticateUser = async (request, response) => {
     }
 }
 
+const userHome = (req, res) => {
+    res.render('user/home',{
+        showHeader: true
+    })
+}
 
 
-
-export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword, authenticateUser, formPasswordUpdate };
+export { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword, authenticateUser, formPasswordUpdate, userHome };

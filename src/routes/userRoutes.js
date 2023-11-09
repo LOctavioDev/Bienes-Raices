@@ -1,5 +1,5 @@
 import express from 'express'
-import { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword, authenticateUser, formPasswordUpdate } from "../controllers/userController.js";
+import { formLogin, formRegister, formPasswordRecovery, insertUser, confirmAccount, updatePassword, emailChangePassword, authenticateUser, formPasswordUpdate, userHome } from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -19,5 +19,7 @@ router.get("/update-password/:token", formPasswordUpdate);
 router.post("/update-password/:token", updatePassword);
 
 router.post("/", authenticateUser)
+
+router.get("/home", userHome)
 
 export default router;
