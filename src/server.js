@@ -12,11 +12,22 @@ import cookieParser from 'cookie-parser';
 
 dotemv.config({path: 'src/.env'})
 
-
 const app = express();
 
+
+// app.use(express.static(path.join(__dirname, 'public')));
+
 // HABILITAR LA PROYTECCION A TRAVEZ DE HELMET
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", 'https://unpkg.com', 'https://cdnjs.cloudflare.com', "'unsafe-eval'"],
+    styleSrc: ["'self'", 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com'],
+    imgSrc: ["'self'", 'data:', 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com', 'https://a.tile.openstreetmap.org', 'https://b.tile.openstreetmap.org', 'https://c.tile.openstreetmap.org'],
+    connectSrc: ["'self'", 'https://tile-provider-domain.com'],
+  },
+}));
+
 
 //app.use(express.static('src/public'));
 app.set('view engine', 'pug');
@@ -31,10 +42,10 @@ app.use(express.urlencoded({
 //HABILITAR EL USO DE COOKIES
 app.use(cookieParser({cookie: true}))
 
-app.use((req, res, next) => {
-  res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Content-Security-Policy', "script-src 'self' 'unsafe-inline'");
+//   next();
+// });
 
 db.authenticate()
   .then(() => {
