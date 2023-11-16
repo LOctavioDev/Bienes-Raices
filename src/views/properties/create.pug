@@ -51,9 +51,18 @@ block content
                             option(value selected disabled) -- SELECT NUMBER --
                             option(value="0") N/A
                             - for (let n = 1; n < 5; n++)
+                
                                 option(value=n) #{n}
-
-                #map.h-96.w-full.rounded.overflow-hidden
+                //- TODO: DEFINIR EL ESPACIO EN DONDE SE VA A PINTAR LA DIRECCION Y AGEGAR COMENTARIO SPARA EXPERIENCIA DE USUARIO
+                .border-gray-600.border-t.py-5.sp-y-5
+                    h3.text-lg.leading-6.font-medium.text-gray-900 Location
+                    p.text-gray-600 Please set the  exactly ubication of the property in your city
+                #map
+                div
+                    p.street
+                input#street(type="hidden", name="street")
+                input#lat(type="hidden", name="lat")
+                input#lng(type="hidden", name="lng")
                 input(class="w-full mt-10 bg-custom2 hover:bg-custom4 text-white font-bold py-3 cursor-pointer" type="submit" value="Create")
 block scripts
     script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")

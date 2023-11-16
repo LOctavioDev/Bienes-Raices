@@ -9,7 +9,8 @@
     "start-permanente": "nodemon src/index.js",
     "server": "nodemon src/server.js",
     "css": "postcss src/public/css/tailwind.css -o src/public/css/app.css --watch",
-    "js": "webpack --watch"
+    "js": "webpack --watch",
+    "dev": "concurrently \"npm run css\" \"npm run js\""
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "express": "^4.18.2",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
