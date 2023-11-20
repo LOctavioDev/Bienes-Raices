@@ -1,5 +1,6 @@
 extends ../layout/index
-
+block styles
+    link(rel="stylesheet", href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css")
 block content
     .py-5
         h2.text-center.text-2xl.font-extrabold= page
@@ -57,7 +58,7 @@ block content
                 .border-gray-600.border-t.py-5.sp-y-5
                     h3.text-lg.leading-6.font-medium.text-gray-900 Location
                     p.text-gray-600 Please set the  exactly ubication of the property in your city
-                #map
+                #map.h-96
                 div
                     p.street
                 input#street(type="hidden", name="street")
@@ -69,4 +70,5 @@ block scripts
     script(src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js")
     script(src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/2.7.0/bundle.min.js")
-    script(src="/js/map.js")
+
+    script( src="/js/map.js") 

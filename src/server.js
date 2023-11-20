@@ -16,6 +16,10 @@ const app = express();
 
 
 // app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static('src/public'));
+app.set('view engine', 'pug');
+app.set('views', './src/views');
+app.use(express.static('./src/public'))
 
 // HABILITAR LA PROYTECCION A TRAVEZ DE HELMET
 app.use(helmet.contentSecurityPolicy({
@@ -24,15 +28,10 @@ app.use(helmet.contentSecurityPolicy({
     scriptSrc: ["'self'", 'https://unpkg.com', 'https://cdnjs.cloudflare.com', "'unsafe-eval'"],
     styleSrc: ["'self'", 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com'],
     imgSrc: ["'self'", 'data:', 'https://unpkg.com', 'https://cloudflare.com', 'https://cdnjs.cloudflare.com', 'https://a.tile.openstreetmap.org', 'https://b.tile.openstreetmap.org', 'https://c.tile.openstreetmap.org'],
-    connectSrc: ["'self'", 'https://tile-provider-domain.com'],
+    connectSrc: ["'self'", 'https://tile-provider-domain.com', 'https://geocode.arcgis.com'],
   },
 }));
 
-
-//app.use(express.static('src/public'));
-app.set('view engine', 'pug');
-app.set('views', './src/views');
-app.use(express.static('./src/public'))
 
 //Habilitamos el acceso a  las propiedades del DOM
 app.use(express.urlencoded({
