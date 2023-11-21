@@ -3,7 +3,10 @@ import generalRoutes from './routes/generalRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import propertyRoutes from './routes/propertyRoutes.js'
 import db from './config/db.js'
-import User from './models/user.js';
+import {User, Property} from './models/relationships.js'
+
+
+
 import helmet from 'helmet';
 import dotemv from 'dotenv';
 import chalk from 'chalk';
@@ -48,29 +51,29 @@ app.use(cookieParser({cookie: true}))
 
 db.authenticate()
   .then(() => {
-    console.log(chalk.green('================================================='));
-    console.log(chalk.green('Conexión a la base de datos establecida con éxito'));
-    console.log(chalk.green('================================================='));
+    console.log(chalk.green('============================='));
+    console.log(chalk.green('CONNECTED SUCCESSFUL DATABASE'));
+    console.log(chalk.green('============================='));
 
     return db.sync();
   })
   .then(() => {
-    console.log(chalk.green('============================================================='));
-    console.log(chalk.green('Se han sincronizado las tablas existentes en la base de datos'));
-    console.log(chalk.green('============================================================='));
+    console.log(chalk.green('======================================================'));
+    console.log(chalk.green('EXISTING TABLES IN THE DATABASE HAVE BEEN SYNCHRONIDEZ'));
+    console.log(chalk.green('======================================================'));
   })
   .catch((error) => {
-    console.error(chalk.red('============================================'));
-    console.error(chalk.red('Error al conectar a la base de datos:', error));
-    console.error(chalk.red('============================================'));
+    console.error(chalk.red('==========================='));
+    console.error(chalk.red('THERE IS AN ERROR: ', error));
+    console.error(chalk.red('==========================='));
   });
 
 // Iniciar el servicio HTTP
 app.listen(process.env.SERVER_PORT, () => {
-    console.log(chalk.blue('============================================='));
-    console.log(chalk.blue('El servicio HTTP ha sido iniciado'));
-    console.log(chalk.blue(`El servicio está escuchando en el puerto ${process.env.SERVER_PORT}`));
-    console.log(chalk.blue('============================================='));
+    console.log(chalk.blue('================================='));
+    console.log(chalk.blue('THE HTTP SERVICE HAS BEEN STARTED'));
+    console.log(chalk.blue(`THE SERVICE IS ON THE PORT: ${process.env.SERVER_PORT}`));
+    console.log(chalk.blue('================================='));
 });
   
 

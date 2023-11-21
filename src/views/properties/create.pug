@@ -12,6 +12,10 @@ block content
                 div
                     label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="title") Title of Announcement
                     input#title.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(type="text" name="title" placeholder="ex. Two floor house")
+                div
+                    label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="description") Description
+                    textarea#description.w-full.px-3.py-2.border-gray-300.rounded-md.placeholder-gray-400(name="description", cols="30", rows="10", placeholder="Detailed")
+
                 div(class="md:flex md:gap-4")
                     div(class="md:w-1/2")
                         label.block.text-sm.uppercase.text-gray-600.mb-3.font-bold(for="category") Category
