@@ -1,8 +1,17 @@
 import User from "./user.js";
 import Property from "./Property.js";
+import Category from "./Category.js";
+import Price from "./Price.js";
 
 Property.belongsTo(User),{
-    foreingKey: 'user_ID'
+    foreignKey: 'user_ID'
+}
+Category.hasOne(Property),{
+    foreignKey: 'property_ID'
 }
 
-export {User, Property}
+Price.hasOne(Property),{
+    foreignKey: 'property_ID'
+}
+
+export {User, Property, Category, Price}

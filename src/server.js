@@ -3,7 +3,7 @@ import generalRoutes from './routes/generalRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import propertyRoutes from './routes/propertyRoutes.js'
 import db from './config/db.js'
-import {User, Property} from './models/relationships.js'
+import {User, Property, Category, Price} from './models/relationships.js'
 
 
 
